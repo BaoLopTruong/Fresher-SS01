@@ -1,51 +1,20 @@
-let n = prompt("nhập số tiền");
-let min;
-let min50;
-let min20;
-let min10;
-let min1;
-let dem=0;
-for(let a=0; a<=n/50; a++){
-    if((a*50)==n){
-        min =a;
-        min50=a;
-        //console.log(min);
-    }else{
-        for(let b=0; b<=n/20;b++){
-            if(((a*50) +(b*20)) == n){
-                min =a +b;
-                min50 =a;
-                min20=b;
-                //console.log(min);
-                
-            }
-            else{
-                for(let c=0; c<=n/10; c++){
-                    if((a*50 + b*20 + c*10) ==n){
-                        min = a+b+c;
-                        min50=a;
-                        min20=b;
-                        min10=c;
-                       // console.log(min);
-                    }
-                    else{
-                        for(let d=0; d<=n/1; d++){
-                            if((a*50 + b*20 + c*10 + d*1) ==n){
-                                min= a+b+c+d;
-                                min50=a;
-                                min20=b;
-                                min10=c;
-                                min1=d;
-                               // console.log(min);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+let n = parseInt(prompt("nhập số tiền"));
+function cashOut(n) {
+    let n10, n20, n50;
+
+    n50 = parseInt(n / 50);
+    n -= (50 * n50);
+
+    n20 = parseInt(n / 20);
+    n -= 20 * n20;
+
+    n10 = parseInt(n / 10);
+    n -= 10 * n10;
+
+    let S = n50 + n20 + n10 + n;
+    
+    console.log("Tổng số tờ tiền là:" + S);
+    console.log("Trong đó: 50$: " + n50 + ", 20$: " + n20 + ", 10$: " + n10 + ", 1$: " + n);
 }
 
-console.log(min);
-console.log("50:"+ min50 + " ,20: " + min20 + " ,10: " + min10 + " ,1: " + min1);
-
+cashOut(n);
