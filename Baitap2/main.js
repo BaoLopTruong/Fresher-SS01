@@ -14,3 +14,5 @@ function formatWallet(number,x){
 }
 
 formatWallet(number,x);
+
+
