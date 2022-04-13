@@ -42,3 +42,5 @@
 
 9. In cách đọc số: In ra màn hình cách đọc số nhỏ hơn 1,000,000.
     readNumber(726504) => bảy mươi hai vạn sáu ngàn năm trăm linh tư.
+
+    https://quantrimang.com/bai-tap-c-co-loi-giai-code-mau-143335#mcetoc_1c07sjimid
