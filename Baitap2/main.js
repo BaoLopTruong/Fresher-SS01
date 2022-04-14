@@ -7,8 +7,7 @@ function formatWallet(number,x){
 
     }
     else{
-        let newNumber = number.toFixed(x);
-        console.log(newNumber);
+       console.log(number + " => " + (number/1000).toFixed(x) + "K");
     }
 
 }
