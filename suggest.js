@@ -1,23 +1,23 @@
-let cover01 = document.createElement("div");
-cover01.style.backgroundColor = "orange";
-cover01.style.width = "100px";
-cover01.style.height = "100px";
-cover01.style.top = "100px";
-cover01.style.left = "100px";
-document.body.appendChild(cover01);
+// let cover01 = document.createElement("div");
+// cover01.style.backgroundColor = "orange";
+// cover01.style.width = "100px";
+// cover01.style.height = "100px";
+// cover01.style.top = "100px";
+// cover01.style.left = "100px";
+// document.body.appendChild(cover01);
 
-function createLabel(index){
-    let label = document.createElement("div");
-    label.innerText = index;
-    label.style.position = "absolute";
-    label.style.top = "35px";
-    label.style.left = "50px";
-    label.style.fontSize = "30px";
-    return label;
-}
+// function createLabel(index){
+//     let label = document.createElement("div");
+//     label.innerText = index;
+//     label.style.position = "absolute";
+//     label.style.top = "35px";
+//     label.style.left = "50px";
+//     label.style.fontSize = "30px";
+//     return label;
+// }
 
-let label01 = createLabel(1);
-cover01.appendChild(label01);
+// let label01 = createLabel(1);
+// cover01.appendChild(label01);
 // create card
     // create image
     // create cover
@@ -32,3 +32,20 @@ cover01.appendChild(label01);
     // first card
     // second card
     // matched ? hide : close
+
+
+
+
+    const COLOR = "orange";
+    const WIDTH = "100px";
+    const HEIGHT = "100px";
+    const TOP =  "100px";
+    const LEFT = "100px";
+
+    let index =1;
+        
+       let html='<div id="'+ index + '"' + 'style="'+ 'background-color:'+COLOR +';width:'+ WIDTH+ ';height:'+ HEIGHT + ';top:' + TOP + ';left:'+ LEFT  +';"' + '>' + '</div> ';
+    
+    document.getElementById('demo').innerHTML = html;
+
+
