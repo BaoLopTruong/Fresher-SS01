@@ -99,21 +99,11 @@ const ImageAdd = ["hinh1", "hinh2", "hinh3", "hinh4", "hinh5", "hinh6", "hinh7",
 
 
 function randomIamge() {
-    let r = Math.floor(Math.random() * IMAGES.length);
+    let r = Math.floor(Math.random() * ImageAdd.length);
     return ImageAdd[r];
 }
 function addImage(){
-    let count=0;
-    let r = Math.floor(Math.random() * IMAGES.length);
-    for(let index=0; index<2;index++){
-        if(count ==2){
-            break;
-        }else{
-            count++;
-            return ImageAdd[r];
-            
-        }
-    }
+
     
 }
 console.log(randomIamge());
