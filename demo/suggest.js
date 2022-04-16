@@ -59,30 +59,40 @@ divComponent.style.top = "2%";
 
 
 function createCard() {
-    let Label = [];
-    let Card = [];
-    let blockDown = 5;
-    for (let index = 0; index < 20; index++) {
+    let card = [];
+    let label = [];
+    let breakRow = 5;
+    let distanceTop = 0;
+    let count = 0;
+    for (let index = 0; index <= 20; index++) {
+        let khoangCach = 0;
+        if (index >= 1 && index <= 20) {
+            card[index] = document.createElement("div");
+            divComponent.appendChild(card[index]);
+            label[index] = document.createElement("p");
+            card[index].appendChild(label[index]);
+            label[index].innerText = "Block" + index;
+            label[index].style.position = "absolute";
+            label[index].style.top = "30px";
+            label[index].style.width = "100%";
+            label[index].style.textAlign = "center";
+            label[index].style.fontSize = "30px";
+            label[index].style.color = "white";
 
-        Card[index] = document.createElement("div");
-        divComponent.appendChild(Card[index]);
-        Label[index] = document.createElement("span");
-        divComponent.appendChild(Label[index]);
-        Label[index].innerText = index;
-        Label[index].style.position = "absolute";
-        Label[index].style.top = "30px";
-        Label[index].style.width = "100%";
-        Label[index].style.textAlign = "center";
-        Label[index].style.fontSize = "30px";
-        Label[index].style.color = "white";
-
-        Card[index].style.width = "200px";
-        Card[index].style.height = "200px";
-        Card[index].style.background = "orange";
-        Card[index].style.position = "absolute";
-        Card[index].style.border = "solid 2px blue";
-        Card[index].style.lineHeight= "10px";
-
+            card[index].style.width = "160px";
+            card[index].style.height = "160px";
+            card[index].style.background = "red";
+            card[index].style.position = "absolute";
+            card[index].style.borderRadius = "10px";
+            khoangCach = count * 210;
+            card[index].style.left = khoangCach + "px";
+            card[index].style.top = distanceTop + "px";
+            count++;
+            if (count == 5) {
+                distanceTop += 200;
+                count = 0;
+            }
+        }
     }
 
 }
