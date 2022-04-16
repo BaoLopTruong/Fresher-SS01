@@ -81,30 +81,68 @@ const DEFAULT_COLS = 5;
 const DEFAULT_ROWS = 4;
 const DEFAULT_CELL_SIZE = 200;
 
-let array =[
-    [1,2,3,4,5],
-    [6,7,8,9,10],
-    [11,12,13,14,15],
-    [16,17,18,19,20]
+const IMAGES = [
+    [1, "hinh1"],
+    [2, "hinh2"],
+    [3, "hinh3"],
+    [4, "hinh4"],
+    [5, "hinh5"],
+    [6, "hinh6"],
+    [7, "hinh7"],
+    [8, "hinh8"],
+    [9, "hinh9"],
+    [10, "hinh10"],
+]
+
+console.log(IMAGES);
+const ImageAdd = ["hinh1", "hinh2", "hinh3", "hinh4", "hinh5", "hinh6", "hinh7", "hinh8", "hinh9", "hinh10"]
+
+
+function randomIamge() {
+    let r = Math.floor(Math.random() * IMAGES.length);
+    return ImageAdd[r];
+}
+function addImage(){
+    let count=0;
+    let r = Math.floor(Math.random() * IMAGES.length);
+    for(let index=0; index<2;index++){
+        if(count ==2){
+            break;
+        }else{
+            count++;
+            return ImageAdd[r];
+            
+        }
+    }
+    
+}
+console.log(randomIamge());
+console.log(addImage());
+let array = [
+    [1, 2, 3, 4, 5],
+    [6, 7, 8, 9, 10],
+    [11, 12, 13, 14, 15],
+    [16, 17, 18, 19, 20]
 ]
 
 function Cell(x, y) {
     this.x = x;
     this.y = y;
     this.value = VALUE_EMPTY;
-    this.getHtml = function(){
+    this.getHtml = function () {
         var top = x * DEFAULT_CELL_SIZE;
         var left = y * DEFAULT_CELL_SIZE;
-        var cellHtml = '<div id="cell-'+x+'-'+y+'" onclick="play('+x+','+y+')" class="cell" style="position: absolute; width: '+
-            DEFAULT_CELL_SIZE+'px; height:'+
-            DEFAULT_CELL_SIZE+'px; left:'+
-            left+'px; top:'+
-            top+'px; line-height: '+
-            DEFAULT_CELL_SIZE+'px;">'+ '<span>'+ array[x][y] + 
-            '</span>' + '</div>';
+        var cellHtml = '<div id="cell-' + x + '-' + y + '" onclick="play(' + x + ',' + y + ')" class="cell" style="position: absolute; width: ' +
+            DEFAULT_CELL_SIZE + 'px; height:' +
+            DEFAULT_CELL_SIZE + 'px; left:' +
+            left + 'px; top:' +
+            top + 'px; line-height: ' +
+            DEFAULT_CELL_SIZE + 'px;">' + '<span>' + array[x][y] + '</span>' +
+            '<img src="./css/images/' + addImage() + '.png"' + '" ' + '>'
+            + '</div>';
         return cellHtml;
     };
-    
+
     // this.draw = function () {
     //     var cellDiv = document.getElementById("cell-"+x+"-"+y);
     //     switch (this.value){
@@ -127,16 +165,16 @@ function GameBoard(rows, cols, elementId) {
     this.elementId = elementId;
     this.turn = VALUE_O;
     this.cells = [];
-   // this.isOver = false;
-    
+    // this.isOver = false;
+
     this.draw = function () {
         var gameBoardDiv = document.getElementById(this.elementId);
         gameBoardDiv.innerHTML = "";
-        for(var i = 0; i < this.rows; i++){
+        for (var i = 0; i < this.rows; i++) {
             var row = [];
             this.cells.push(row);
             console.log(this.cells.push(row))
-            for(var j = 0; j < this.cols; j++){
+            for (var j = 0; j < this.cols; j++) {
                 var cell = new Cell(i, j);
                 row.push(cell);
                 gameBoardDiv.innerHTML += cell.getHtml();
@@ -144,19 +182,23 @@ function GameBoard(rows, cols, elementId) {
             }
         }
     };
-    
+
     this.play = function (x, y) {
         alert("OK")
-        var gameBoardDiv = document.getElementById(this.elementId);
-        console.log(this.elementId)
-        gameBoardDiv.style.display = 'block';
+        var img = document.getElementById("array[" + x + "][" + y + "]");
+        console.log(img)
+        // img.style.display ="block";
+        var cellDiv = document.getElementById("cell-" + x + "-" + y);
+        console.log(cellDiv);
+        cellDiv.style.display = "none";
     }
- 
-  
+
+
+
 }
 function play(x, y) {
     gameBoard.play(x, y);
- }
+}
 gameBoard = new GameBoard(DEFAULT_ROWS, DEFAULT_COLS, "game-board");
 gameBoard.draw();
 
