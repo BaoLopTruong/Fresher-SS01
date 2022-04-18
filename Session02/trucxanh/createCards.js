@@ -102,12 +102,12 @@ function randomIamge() {
     let r = Math.floor(Math.random() * ImageAdd.length);
     return ImageAdd[r];
 }
-function addImage(){
+// function addImage(){
 
     
-}
+// }
 console.log(randomIamge());
-console.log(addImage());
+//console.log(addImage());
 let array = [
     [1, 2, 3, 4, 5],
     [6, 7, 8, 9, 10],
@@ -128,7 +128,7 @@ function Cell(x, y) {
             left + 'px; top:' +
             top + 'px; line-height: ' +
             DEFAULT_CELL_SIZE + 'px;">' + '<span>' + array[x][y] + '</span>' +
-            '<img src="./css/images/' + addImage() + '.png"' + '" ' + '>'
+            '<img id="img-' + x + '-' + y +'" src="./css/images/' + randomIamge() + '.png"' + '" style="visibility :none;"'  + '>'
             + '</div>';
         return cellHtml;
     };
@@ -175,10 +175,10 @@ function GameBoard(rows, cols, elementId) {
 
     this.play = function (x, y) {
         alert("OK")
-        var img = document.getElementById("array[" + x + "][" + y + "]");
+        let img = document.getElementById("img-" + x + "-" + y);
         console.log(img)
-        // img.style.display ="block";
-        var cellDiv = document.getElementById("cell-" + x + "-" + y);
+         img.style.visibility ="none";
+        let cellDiv = document.getElementById("cell-" + x + "-" + y);
         console.log(cellDiv);
         cellDiv.style.display = "none";
     }

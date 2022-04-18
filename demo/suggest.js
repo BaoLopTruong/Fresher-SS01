@@ -49,14 +49,38 @@ const LEFT = "100px";
 // document.getElementById('demo').innerHTML = html;
 let divComponent = document.createElement("div");
 document.body.appendChild(divComponent);
-divComponent.style.width = "1200px";
-divComponent.style.height = "900px";
-divComponent.style.background = "green";
+divComponent.style.width = "1000px";
+divComponent.style.height = "800px";
+divComponent.style.background = "orange";
 divComponent.style.position = "absolute";
 divComponent.style.left = "20%";
-divComponent.style.top = "2%";
+divComponent.style.top = "20%";
 
-
+    let score=1000;
+    let createScore = document.createElement("div");
+    document.body.appendChild(createScore); 
+    createScore.style.width= "200px";
+    createScore.style.color ="black";
+    createScore.innerText= " your score: 0" ;
+    createScore.style.fontSize = "30px";
+    createScore.style.position = "absolute";
+    createScore.style.left = "20%";
+ function createButtonPlay(){
+     let creatButtonPlay =document.createElement("button");
+     creatButtonPlay.innerText = "Play Game";
+     creatButtonPlay.style.color = "gray";
+     creatButtonPlay.style.width = "100px";
+     creatButtonPlay.style.height = "40px";
+     creatButtonPlay.style.top = "20%";
+     createScore.appendChild(creatButtonPlay); 
+     return creatButtonPlay;
+ }
+ //createButtonPlay();
+    let buttonPlay =createButtonPlay();
+    buttonPlay.addEventListener("click", () => {
+        createScore.innerText= " your score: " + score;
+        createCard();
+    });
 
 function createCard() {
     let card = [];
@@ -68,25 +92,28 @@ function createCard() {
         let khoangCach = 0;
         if (index >= 1 && index <= 20) {
             card[index] = document.createElement("div");
-            divComponent.appendChild(card[index]);
+            divComponent.appendChild(card[index]); 
+
+            card[index].style.width = "200px";
+            card[index].style.height = "200px";
+            card[index].style.background = "orange";
+            card[index].style.position = "absolute";
+            card[index].style.border = "2px solid blue";
+            khoangCach = count * 200;
+            card[index].style.left = khoangCach + "px";
+            card[index].style.top = distanceTop + "px";
+
             label[index] = document.createElement("p");
             card[index].appendChild(label[index]);
-            label[index].innerText = "Block" + index;
+            label[index].innerText =  index;
             label[index].style.position = "absolute";
             label[index].style.top = "30px";
             label[index].style.width = "100%";
             label[index].style.textAlign = "center";
-            label[index].style.fontSize = "30px";
+            label[index].style.fontSize = "50px";
             label[index].style.color = "white";
 
-            card[index].style.width = "160px";
-            card[index].style.height = "160px";
-            card[index].style.background = "red";
-            card[index].style.position = "absolute";
-            card[index].style.borderRadius = "10px";
-            khoangCach = count * 210;
-            card[index].style.left = khoangCach + "px";
-            card[index].style.top = distanceTop + "px";
+           
             count++;
             if (count == 5) {
                 distanceTop += 200;
@@ -97,4 +124,65 @@ function createCard() {
 
 }
 
-createCard();
+let cards = [
+    {
+        name: "php",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/php-logo_1.png",
+        id: 1,
+    },
+    {
+        name: "css3",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/css3-logo.png",
+        id: 2
+    },
+    {
+        name: "html5",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/html5-logo.png",
+        id: 3
+    },
+    {
+        name: "jquery",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/jquery-logo.png",
+        id: 4
+    }, 
+    {
+        name: "javascript",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/js-logo.png",
+        id: 5
+    },
+    {
+        name: "node",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/nodejs-logo.png",
+        id: 6
+    },
+    {
+        name: "photoshop",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/photoshop-logo.png",
+        id: 7
+    },
+    {
+        name: "python",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/python-logo.png",
+        id: 8
+    },
+    {
+        name: "rails",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/rails-logo.png",
+        id: 9
+    },
+    {
+        name: "sass",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/sass-logo.png",
+        id: 10
+    },
+    {
+        name: "sublime",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/sublime-logo.png",
+        id: 11
+    },
+    {
+        name: "wordpress",
+        img: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/74196/wordpress-logo.png",
+        id: 12
+    },
+];
