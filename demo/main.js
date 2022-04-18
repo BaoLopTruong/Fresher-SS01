@@ -175,4 +175,39 @@
 	Memory.init(cards);
 
 
+
+
+
 })();
+
+
+
+      //divblockBack = document.createElement("div");
+      // document.body.appendChild(divblockBack);
+
+      //   divBack[index] = document.createElement("div");
+      //   divBackComponent.appendChild(divBack[index]);
+
+      //   divBack[index].style.width = "200px";
+      //   divBack[index].style.height = "200px";
+      //   divBack[index].style.background = "orange";
+      //   divBack[index].style.position = "absolute";
+      //   divBack[index].style.border = "2px solid blue";
+      //   khoangCach = count * 200;
+      //   divBack[index].style.left = khoangCach + "px";
+      //   divBack[index].style.top = distanceTop + "px";
+      //   imgBack = document.createElement("img");
+      //   imgBack.style.width = "200px";
+      //   imgBack.src = cards[index].img;
+      //   divBackComponent.appendChild(imgBack);
+
+	  // function clickCard() {
+//     for(let index= 0; index< 20; index ++){
+//         let btnClicked = document.getElementById("card-" + index);
+//         btnClicked.addEventListener("click", () => {
+//           alert("OK");
+//         });
+//     }
+
+// }
+// clickCard();

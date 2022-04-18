@@ -6,25 +6,25 @@ function countdownto(target, time,callback) {
         h = m * 60,
         d = h * 24;
 
-    // (function timer() {
-    //     var now = new Date();
-    //     var dist = finish - now;
+    (function timer() {
+        var now = new Date();
+        var dist = finish - now;
 
-    //     var days = Math.floor(dist / d),
-    //         hours = Math.floor((dist % d) / h),
-    //         minutes = Math.floor((dist % h) / m),
-    //         seconds = Math.floor((dist % m) / s);
+        var days = Math.floor(dist / d),
+            hours = Math.floor((dist % d) / h),
+            minutes = Math.floor((dist % h) / m),
+            seconds = Math.floor((dist % m) / s);
 
-    //     var timestring = days + 'days ' + hours + 'hrs ' + minutes + 'mins ' + seconds + 'seconds ';
-    //     target.innerHTML = timestring
+        var timestring = days + 'days ' + hours + 'hrs ' + minutes + 'mins ' + seconds + 'seconds ';
+        target.innerHTML = timestring
         
-    //     if (dist > 0) {
-    //         setTimeout(timer, 1000);
-    //     } else {
-    //         callback()
-    //     }
+        if (dist > 0) {
+            setTimeout(timer, 1000);
+        } else {
+            callback()
+        }
         
-    // })()
+    })()
 
     let test = () =>{
         let now = new Date();
