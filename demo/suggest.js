@@ -1,37 +1,3 @@
-// let cover01 = document.createElement("div");
-// cover01.style.backgroundColor = "orange";
-// cover01.style.width = "100px";
-// cover01.style.height = "100px";
-// cover01.style.top = "100px";
-// cover01.style.left = "100px";
-// document.body.appendChild(cover01);
-
-// function createLabel(index){
-//     let Label = document.createElement("div");
-//     Label.innerText = index;
-//     Label.style.position = "absolute";
-//     Label.style.top = "35px";
-//     Label.style.left = "50px";
-//     Label.style.fontSize = "30px";
-//     return Label;
-// }
-
-// let Label01 = createLabel(1);
-// cover01.appendChild(Label01);
-// create Card
-// create image
-// create cover
-// create Label
-// open
-// close
-// hide
-
-// create 20 Cards ( 20 index, 10 value )
-// display Cards
-// shuffle Cards
-// first Card
-// second Card
-// matched ? hide : close
 
 let cards = [
   {
@@ -136,25 +102,21 @@ let cards = [
   },
 ];
 
-// let index =1;
-
-//    let html='<div id="'+ index + '"' + 'style="'+ 'background-color:'+COLOR +';width:'+ WIDTH+ ';height:'+ HEIGHT + ';top:' + TOP + ';left:'+ LEFT  +';"' + '>' + '</div> ';
-
-// document.getElementById('demo').innerHTML = html;
 let divComponent = document.createElement("div");
 document.body.appendChild(divComponent);
 divComponent.style.width = "1000px";
-divComponent.style.height = "800px";
+divComponent.style.height = "805px";
 divComponent.style.background = "green";
 divComponent.style.position = "absolute";
 divComponent.style.left = "20%";
 divComponent.style.top = "20%";
-//divComponent.style.display = "none";
+divComponent.className = "divComponent";
+
 let score = 1000;
-let game = false;
+let gameOn = false;
 let createScore = document.createElement("div");
 document.body.appendChild(createScore);
-createScore.style.width = "200px";
+createScore.style.width = "250px";
 createScore.style.color = "black";
 createScore.innerText = " your score: 0";
 createScore.style.fontSize = "30px";
@@ -171,24 +133,26 @@ function createButtonPlay() {
   createScore.appendChild(creatButtonPlay);
   return creatButtonPlay;
 }
-//createButtonPlay();
 let buttonPlay = createButtonPlay();
 buttonPlay.addEventListener("click", () => {
   createScore.innerText = " your score: " + score;
   shuffleCards(cards);
-  game = true;
+  gameOn = true;
   createCard();
+  createImage();
+  Timer();
+  let mintues = 1;
+  let display = document.getElementById('timer');
+  startCountdown(mintues, display);
 });
 
 let divBackComponent = document.createElement("div");
-//document.body.appendChild(divBackComponent);
+
 divBackComponent.style.width = "1000px";
-divBackComponent.style.height = "800px";
-//divBackComponent.style.background = "white";
+divBackComponent.style.height = "805px";
 divBackComponent.style.position = "absolute";
 divBackComponent.style.left = "20%";
 divBackComponent.style.top = "20%";
-//divBackComponent.style.display = "none";
 divBackComponent.className = "divback";
 
 function createCard() {
@@ -212,7 +176,6 @@ function createCard() {
       card[index].style.left = khoangCach + "px";
       card[index].style.top = distanceTop + "px";
       card[index].id = "card-" + index;
-      //card[index].style.display="none";
       card[index].addEventListener("click", clickCard);
 
       label[index] = document.createElement("p");
@@ -224,6 +187,25 @@ function createCard() {
       label[index].style.textAlign = "center";
       label[index].style.fontSize = "50px";
       label[index].style.color = "white";
+
+
+
+      count++;
+      if (count == 5) {
+        distanceTop += 200;
+        count = 0;
+      }
+    }
+  }
+}
+
+function createImage() {
+  let divBack = [];
+  let distanceTop = 0;
+  let count = 0;
+  for (let index = 0; index < 20; index++) {
+    let khoangCach = 0;
+    if (index >= 0 && index < 20) {
 
       divBack[index] = document.createElement("img");
       divComponent.appendChild(divBack[index]);
@@ -242,6 +224,7 @@ function createCard() {
       }
     }
   }
+
 }
 
 function shuffleCards(array) {
@@ -259,72 +242,122 @@ function shuffleCards(array) {
 function clickCard(e) {
   console.log(e);
   console.log(e.path[1].id);
-  
-  if (game == true) {
-      let dem=0;
-      if(dem>2){
-        dem=0;
-        for(let index =0; index < 20;index++){
-            document.getElementById('card-'+index).style.display = "block";
-        }
-      }else{
-          dem++;
-          console.log(dem);
-        let n = e.path[1].id ? 1 : 0;
-        let m = e.path[n].id;
-        document.getElementById(m).style.display = "none";
-      }
 
-    
+  if (gameOn == true) {
+    let dem = 0;
+    if (dem > 2) {
+      dem = 0;
+      for (let index = 0; index < 20; index++) {
+        document.getElementById('card-' + index).style.display = "block";
+      }
+    } else {
+      dem++;
+      console.log(dem);
+      let n = e.path[1].id ? 1 : 0;
+      let m = e.path[n].id;
+      document.getElementById(m).style.display = "none";
+    }
+
+
   }
 }
 
+
+function hideElements(e) {
+  let n = e.path[1].id ? 1 : 0;
+  let m = e.path[n].id;
+  let hideBlocks = Array.from(document.getElementsById(m));
+  for (var i = 0; i < hideBlocks.length; i++) {
+      document.getElementById(hideBlocks[i].id).classList.remove('visible'); 
+  } 
+}
+
+
 function checkCard() {
-    let pickCard=[];
-    let dem=0;
-    if(dem==2){
-       dem=0;
-       for(let index=0;index<20;index++){
-        document.getElementById('card-'+index).style.display = "block";
-       }
+  let pickCard = [];
+  let dem = 0;
+  if (dem == 2) {
+    dem = 0;
+    for (let index = 0; index < 20; index++) {
+      document.getElementById('card-' + index).style.display = "block";
     }
-    else{
-        dem++;
-        console.log(dem);
-    }
+  }
+  else {
+    dem++;
+    console.log(dem);
+  }
 
 }
 
 console.log(shuffleCards(cards));
 
-function startCountdown(duration,display) {
-  let timer = 60 * duration, minutes,seconds;
+function startCountdown(duration, display) {
+  let timer = 60 * duration, minutes, seconds;
   countdown = setInterval(() => {
-      minutes = parseInt(timer / 60, 10);
-      seconds = parseInt(timer % 60, 10);
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      display.textContent = `Time ${ minutes }:${ seconds }`;
-      if (--timer < 0) {
-          gameOver();
-      }
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    display.textContent = `Time ${minutes}:${seconds}`;
+    if (--timer < 0) {
+      gameOver();
+      reset();
+    }
   }, 1000);
 }
 
 
-function Timer(){
+function Timer() {
   let timerDisplay = document.createElement('div');
-  divComponent.appendChild(timerDisplay);
+  createScore.appendChild(timerDisplay);
   timerDisplay.innerText = "Timer:";
-  timerDisplay.style.color = "gray";
-  timerDisplay.style.width = "100px";
+  timerDisplay.style.color = "black";
+  timerDisplay.style.width = "200px";
   timerDisplay.style.height = "40px";
   timerDisplay.style.top = "20%";
-  timerDisplay.id="timer";
+  timerDisplay.id = "timer";
 }
-Timer();
-let mintues =2;
- let display = document.getElementById('timer');
-startCountdown(mintues, display);
+
+
+function gameOver() {
+  gameOn = false;
+  alert("Game Over");
+  clearInterval(countdown);
+}
+
+function btnPlayAgain() {
+  let creatButtonPlayAgain = document.createElement("button");
+  creatButtonPlayAgain.innerText = "Play Again";
+  creatButtonPlayAgain.style.color = "gray";
+  creatButtonPlayAgain.style.width = "100px";
+  creatButtonPlayAgain.style.height = "40px";
+  creatButtonPlayAgain.style.top = "20%";
+  createScore.appendChild(creatButtonPlayAgain);
+  return creatButtonPlayAgain;
+}
+
+function reset() {
+  let buttonPlayAgain = btnPlayAgain();
+  buttonPlayAgain.addEventListener("click", () => {
+    createScore.innerText = " your score: " + score;
+    resetGame();
+    shuffleCards(cards);
+    gameOn = true;
+    createCard();
+    //createImage();
+    Timer();
+    let mintues = 1;
+    let display = document.getElementById('timer');
+    startCountdown(mintues, display);
+  });
+}
+
+function resetGame() {
+  for (let index = 0; index < 20; index++) {
+    let element = document.getElementById('card-' + index);
+    element.remove();
+  }
+}
+
 
 
