@@ -39,12 +39,11 @@ export class Card extends Node {
         this.label.elm.style.display = "none";
     }
     hide(){
-        this.cover.elm.style.display = "block";
-        this.label.elm.style.display = "block";
+    alert("đã block card");
     }
     close(){
-        this.cover.elm.removeChild();
-        this.label.elm.removeChild();
+        this.cover.elm.style.display = "block";
+        this.label.elm.style.display = "block";
     }
 
 }
