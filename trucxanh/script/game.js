@@ -12,11 +12,12 @@ class Game extends Node {
     }
 
     _init() {
-        this.count =0;
+        this.count = 0;
         this.canClick = true;
         this.fistCard = null;
         this.secondCard = null;
-        this.scores = 100;
+        this.toTalPoint={value: 100};
+        this.point = 100;
         this.elm.style.backgroundImage = "url(../trucxanh/images/trucxanh_bg.jpg)";
         this.elm.style.top = "20%";
         this.elm.style.left = "25%";
@@ -40,10 +41,10 @@ class Game extends Node {
             this.addChild(card);
             card.elm.addEventListener("click", this.onClickCard.bind(this, card));
         }
-        console.log(this.cards);
+        console.log(cards);
         this.play.elm.style.display = "none";
         this._createResetGame();
-        //push shufferCard
+        //push shuffleCards
         // this.cards = [];
         // for(let index=0; index<20; index++){
         //     this.card = new Card();
@@ -55,7 +56,7 @@ class Game extends Node {
         // let col = index % 5;
         // let row = Math.floor(index / 5);
         // this.cards[index].label.text =index+1;
-  
+
         // this.cards[index].elm.style.top = row * 120 + 'px';
         // this.cards[index].elm.style.left = col * 120 + 'px';
         // this.addChild(this.cards[index]);
@@ -76,9 +77,10 @@ class Game extends Node {
         return array;
     }
 
+
     _createScore() {
         this.score = new Label();
-        this.score.text = "Score: " + this.scores;
+        this.score.text = "Score: " + this.point;
         this.score.color = "white";
         this.score.fontSize = 30;
         this.score.x = 5;
@@ -98,7 +100,7 @@ class Game extends Node {
         this.addChild(this.play);
 
     }
-    _createPlayAgain(){
+    _createPlayAgain() {
         this.playAgain = new Label();
         this.playAgain.text = "Play Again";
         this.playAgain.color = "red";
@@ -126,63 +128,80 @@ class Game extends Node {
     onClickCard(card) {
         if (!this.canClick) return;
 
-        if (card === this.fistCard) return;
+        if (this.fistCard === card) return;
 
         if (this.fistCard === null) {
             this.fistCard = card;
             // open card
-            this.fistCard.open();
+            this.fistCard.flipCard();
             console.log('first01', this.fistCard.value, this.fistCard.index);
 
         } else {
             this.canClick = false;
             this.secondCard = card;
             // open card
-            this.secondCard.open();
+            this.secondCard.flipCard();
             console.log('first02', this.secondCard.value, this.secondCard.index);
             setTimeout(() => { this.compareCard() }, 1000);
         }
 
     }
+    countPoint(x) {
+
+        let tl = gsap.timeline({paused: true})
+       // tl.from("#stat1", { opacity: 0 })
+        tl.to(this.toTalPoint, {value: x , duration: 1, onUpdate: () =>{
+            this.score.text = "Score: "+ Math.floor( this.toTalPoint.value);
+            console.log(this.toTalPoint.value);
+        }});
+        tl.play();
+    }
 
     compareCard() {
         if (this.fistCard.value === this.secondCard.value) {
             // hide
-            this.fistCard.hide();
-            this.secondCard.hide();
-            this.scores += 10;
+            this.fistCard.zIndex =2;
+            this.secondCard.zIndex =2;
+            this.fistCard.zoomIn();
+            this.secondCard.zoomIn();
+            // this.fistCard.hide();
+            // this.secondCard.hide();
+            this.point += 10;
             this.count++;
         } else {
             //close
-            this.fistCard.close();
-            this.secondCard.close();
-            this.scores -= 10;
+            // this.fistCard.close();
+            // this.secondCard.close();
+            this.fistCard.flopCard();
+            this.secondCard.flopCard();
+            this.point -= 10;
         }
         this.canClick = true;
         this.fistCard = null;
-        this.score.text = "Score: " + this.scores;
-        this.checkWin(this.scores);
+        this.countPoint(this.point);
+        this.checkWin(this.point);
     }
 
     checkWin(point) {
         if (point == 0) {
             alert("You close");
             this.play.elm.style.display = "none";
-           this._createPlayAgain();
+            this._createPlayAgain();
         }
         if (point < 0) return;
-        if(this.count == 10){
-            alert("you win with:" + this.scores + " poiint");
+        if (this.count == 10) {
+            alert("you win with:" + this.point + " point");
             this._createPlayAgain();
         }
 
     }
-    resetGame(){
+    resetGame() {
         document.getElementsByTagName('div')[0].innerHTML = "";
-        this.scores = 100;
+        this.point = 100;
         this._createScore();
         this._createCards();
-        this.count=0;
+        this.count = 0;
+        this.fistCard = null;
     }
 
 

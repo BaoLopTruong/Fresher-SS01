@@ -6,6 +6,30 @@ export class Node {
         this._height = 0;
         this.elm = this._createElement();
         this.children = [];
+        this._scaleX = 1;
+        this._scaleY = 1;
+        this._zIndex = 1;
+    }
+    get zIndex(){
+        return this._scaleX;
+    }
+    set zIndex(value){
+        this._scaleX = value;
+        this.elm.style.zIndex = `${ this._zIndex})`;
+    }
+    get scaleX(){
+        return this._scaleX;
+    }
+    set scaleX(value){
+        this._scaleX = value;
+        this.elm.style.transform = `scaleX(${this._scaleX})`;
+    }
+    get scaleY(){
+        return this._scaleY;
+    }
+    set scaleY(value){
+        this._scaleY = value;
+        this.elm.style.transform = `scaleY(${this._scaleY})`;
     }
 
     get x() {

@@ -42,8 +42,15 @@ class Director {
         tl.call(()=>{
             this.card.elm.style.backgroundColor = "green"
         })
-        tl.to(this.card, {scaleX: 1, duration: 0.5});
+        tl.to(this.card, {scaleX: 1, duration: 0.5, });
         tl.play();
+    }
+
+    countPoint(){
+        let counter ={value:100};
+        gsap.to(counter, {value: 50, duration: 3, onUpdate: () =>{
+            console.log(counter.value);
+        }})
     }
     tween(target, duration, props) {
         for (let key in props) {
