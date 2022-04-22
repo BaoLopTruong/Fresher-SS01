@@ -9,21 +9,24 @@ export class Card extends Node {
         this._createSprite();
         this._createCover();
         this._createLabel();
+        this._opacity = 1;
+    }
+    get opacity(){
+        return this._opacity;
+    }
+    set opacity(value){
+        this._opacity = value;
+        this.elm.style.opacity =  this._opacity;
     }
     _createSprite() {
         this.sprite = new Sprite();
         this.sprite.width = 100;
         this.sprite.height = 100;
-        this.sprite.x = 100;
-        this.sprite.y = 100;
         this.sprite.scaleX = 0;
-        //this.sprite.zIndex = 0;
         this.addChild(this.sprite);
     }
     _createCover() {
         let cover = new Node();
-        cover.y = 100;
-        cover.x = 100;
         cover.width = 100;
         cover.height = 100;
         cover.elm.style.backgroundColor = "orange";
@@ -34,8 +37,6 @@ export class Card extends Node {
     _createLabel() {
         let label = new Label();
         label.text = this.index + 1;
-        label.x = 143;
-        label.y = 140;
         label.width = 40;
         this.label = label;
         this.addChild(label);
@@ -57,33 +58,32 @@ export class Card extends Node {
     }
     flipCard() {
         const tl = gsap.timeline({ paused: true });
-        tl.to(this.cover, { scaleX: 0, duration: 0.2 });
-        tl.to(this.label, { scaleX: 0, duration: 0.2 });
-        tl.call(() => {
-            this.open();
-        })
+        tl.to(this.cover, { scaleX: 0, duration: 0.2 })
+        .to(this.label, { scaleX: 0, duration: 0.2 });
         tl.to(this.sprite, { scaleX: 1, duration: 0.2 });
         tl.play();
     }
     flopCard() {
         const tl = gsap.timeline({ paused: true });
         tl.to(this.sprite, { scaleX: 0, duration: 0.2 });
-        tl.call(() => {
-            this.close();
-        })
-        tl.to(this.cover, { scaleX: 1, duration: 0.2 });
-        tl.to(this.label, { scaleX: 1, duration: 0.2 });
+        tl.to(this.cover, { scaleX: 1, duration: 0.2 })
+        .to(this.label, { scaleX: 1, duration: 0.2 });
+  
         tl.play();
     }
     zoomIn() {
         const tl = gsap.timeline({ paused: true });
-        this.sprite.elm.style.position = "relative";
-        //this.sprite.elm.style.zIndex = "1";
-        tl.to(this.sprite, { zIndex: 99, duration: 2 });
-        tl.to(this.sprite, { zIndex: 99, duration: 2, width: 200, height: 200 });
+        tl.to(this.sprite.elm, { zIndex: 12, duration: 0.5 })
+        .to(this.sprite.elm, { zIndex: 12, duration: 0.5, scale:2 });
         tl.call(() => {
             this.hide();
         })
+        tl.play();
+    }
+    firstLoad(){
+        const tl = gsap.timeline({ paused: true});
+        tl.from(this.cover.elm, {x:210, y:210,opacity:0 , duration: 0.08})
+        .from(this.sprite.elm, {x:210,y:210, zIndex:12, duration:0.08})
         tl.play();
     }
 
