@@ -16,7 +16,8 @@ export class Card extends Node {
         this.sprite.height = 100;
         this.sprite.x = 100;
         this.sprite.y = 100;
-        this.sprite.scaleX=0;
+        this.sprite.scaleX = 0;
+        //this.sprite.zIndex = 0;
         this.addChild(this.sprite);
     }
     _createCover() {
@@ -25,14 +26,13 @@ export class Card extends Node {
         cover.x = 100;
         cover.width = 100;
         cover.height = 100;
-        //cover.scaleY = 0;
         cover.elm.style.backgroundColor = "orange";
         cover.elm.style.border = "1px solid blue";
         this.cover = cover;
         this.addChild(this.cover);
     }
     _createLabel() {
-         let label = new Label();
+        let label = new Label();
         label.text = this.index + 1;
         label.x = 143;
         label.y = 140;
@@ -56,42 +56,35 @@ export class Card extends Node {
         this.label.elm.style.display = "block";
     }
     flipCard() {
-        const tl = gsap.timeline({paused: true});
-        tl.to(this.cover, {scaleX: 0, duration: 0.25});
-        tl.to(this.label, {scaleX: 0, duration: 0.25});
-        tl.call(()=>{
-            this.cover.elm.style.display = "none";
-            this.label.elm.style.display = "none";
+        const tl = gsap.timeline({ paused: true });
+        tl.to(this.cover, { scaleX: 0, duration: 0.2 });
+        tl.to(this.label, { scaleX: 0, duration: 0.2 });
+        tl.call(() => {
+            this.open();
         })
-        tl.to(this.sprite, {scaleX: 1, duration: 0.25});
-        
-        tl.play();
-
-    }
-    flopCard(){
-        const tl = gsap.timeline({paused: true});
-        tl.to(this.sprite, {scaleX: 0, duration: 0.25});
-        tl.call(()=>{
-            this.cover.elm.style.display = "block";
-            this.label.elm.style.display = "block";
-        })
-        tl.to(this.cover, {scaleX: 1, duration: 0.25});
-        tl.to(this.label, {scaleX: 1, duration: 0.25});
+        tl.to(this.sprite, { scaleX: 1, duration: 0.2 });
         tl.play();
     }
-    zoomIn(){
-        const tl = gsap.timeline({paused:true});
+    flopCard() {
+        const tl = gsap.timeline({ paused: true });
+        tl.to(this.sprite, { scaleX: 0, duration: 0.2 });
+        tl.call(() => {
+            this.close();
+        })
+        tl.to(this.cover, { scaleX: 1, duration: 0.2 });
+        tl.to(this.label, { scaleX: 1, duration: 0.2 });
+        tl.play();
+    }
+    zoomIn() {
+        const tl = gsap.timeline({ paused: true });
         this.sprite.elm.style.position = "relative";
-       // this.sprite.elm.style.zIndex = "1";
-        tl.to(this.sprite, {  scaleX:1, scaleY:1, duration: 2  } );
-        tl.to(this.sprite, { scaleX:1, scaleY:1, width:200, height:200,  duration: 2, });
-        
-        tl.call(() =>{
-            this.sprite.elm.style.display = "none";
+        //this.sprite.elm.style.zIndex = "1";
+        tl.to(this.sprite, { zIndex: 99, duration: 2 });
+        tl.to(this.sprite, { zIndex: 99, duration: 2, width: 200, height: 200 });
+        tl.call(() => {
+            this.hide();
         })
-
         tl.play();
-
     }
 
 }

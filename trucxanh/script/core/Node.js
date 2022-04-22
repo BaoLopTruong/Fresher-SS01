@@ -8,13 +8,13 @@ export class Node {
         this.children = [];
         this._scaleX = 1;
         this._scaleY = 1;
-        this._zIndex = 1;
+        this._zIndex = 0;
     }
     get zIndex(){
         return this._scaleX;
     }
     set zIndex(value){
-        this._scaleX = value;
+        this._zIndex = value;
         this.elm.style.zIndex = `${ this._zIndex})`;
     }
     get scaleX(){

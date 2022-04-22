@@ -160,18 +160,14 @@ class Game extends Node {
     compareCard() {
         if (this.fistCard.value === this.secondCard.value) {
             // hide
-            this.fistCard.zIndex =2;
-            this.secondCard.zIndex =2;
+            this.fistCard.zIndex =1;
+            this.secondCard.zIndex =1;
             this.fistCard.zoomIn();
             this.secondCard.zoomIn();
-            // this.fistCard.hide();
-            // this.secondCard.hide();
             this.point += 10;
             this.count++;
         } else {
             //close
-            // this.fistCard.close();
-            // this.secondCard.close();
             this.fistCard.flopCard();
             this.secondCard.flopCard();
             this.point -= 10;
