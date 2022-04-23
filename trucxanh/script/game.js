@@ -38,7 +38,7 @@ class Game extends Node {
 
     _createCards() {
         //sound
-        this.playSound(this.soundId[0]);
+        // this.playSound(this.soundId[0]);
         // setTimeout(()=>{
         //     this.playSound(this.soundId[0]);
         //     setTimeout(()=>{
@@ -60,9 +60,13 @@ class Game extends Node {
             this.addChild(card);
             card.elm.addEventListener("click", this.onClickCard.bind(this, card));
             tl.from(card, { x: 310, y: 250, opacity: 0, duration: 0.1 })
+            .from(card.sprite,{x:310,y:250,zIndex:2, duration:0.1})
           
         }
-        this._secondCard(cards);
+        setTimeout(()=>{
+            this._playMoveCard(cards);
+        },3000);
+       //    this._playMoveCard(cards);
         console.log(cards);
         this.play.elm.style.display = "none";
         this._createResetGame();
@@ -173,7 +177,7 @@ class Game extends Node {
         tl.play();
     }
 
-    _secondCard(arrCards) {
+    _playMoveCard(arrCards) {
         const tl= gsap.timeline();
         for (let index=0; index < arrCards.length; index++) {
             let col = index % 5;
@@ -249,6 +253,8 @@ class Game extends Node {
         if (point == 0) {
             setTimeout(()=>{
                 document.getElementsByTagName('div')[0].innerHTML = "";
+                //this.elm.innerHTML()
+                //removeChild()
                 this._createGameOver();
             },1000)
             

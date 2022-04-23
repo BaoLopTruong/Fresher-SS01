@@ -8,6 +8,7 @@ export class Node {
         this.children = [];
         this._scaleX = 1;
         this._scaleY = 1;
+        this._active= true;
     }
 
     get scaleX(){
