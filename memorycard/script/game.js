@@ -13,8 +13,11 @@ class Game extends Node {
 
     _init() {
         this._createBackGround();
+        this.soundMusic = new Audio("./audio/music.mp3");
+        this.soundBreak = new Audio("./audio/break.mp3");
+        this.soundShot = new Audio("./audio/shot.mp3");
+        this.soundDeath = new Audio("./audio/death.mp3");
         this.count = 0;
-        this._isClicked = false;
         this.canClick = true;
         this.fistCard = null;
         this.secondCard = null;
@@ -24,9 +27,10 @@ class Game extends Node {
         this._createPlayGame();
     }
     _createBackGround() {
-        this.elm.style.backgroundImage = "url(../trucxanh/images/trucxanh_bg.jpg)";
+        this.elm.style.backgroundImage = "url(./images/trucxanh_bg.jpg)";
         this.elm.style.top = "20%";
         this.elm.style.left = "25%";
+        this.elm.style.backgroundSize = "cover";
         this.width = 800;
         this.height = 600;
     }
@@ -36,34 +40,28 @@ class Game extends Node {
         this.cards = [];
         this.tl = gsap.timeline();
         for (let index = 19; index >= 0; index--) {
+            this.canClick = false;
             let card = new Card(index);
             this.cards.push(card);
             card.setValue(index % 10);
             card.x = 350;
             card.y = 230;
-            card.opacity = 1;
             this.addChild(card);
-            this._isClicked = true;
+            card.elm.addEventListener("click", this.onClickCard.bind(this, card));
             this.tl.from(card, { x: 350, y: 230, opacity: 0, duration: 0.05 })
                 .from(card.cover.elm, { display: "none", duration: 0.05 });
 
         }
-      
+
         this.cards.reverse();
         setTimeout(() => {
             this._playMoveCard(this.cards);
         }, 2500);
         console.log(this.cards);
         this.play.elm.style.display = "none";
-        this._onClickCard(this.cards);
+        this.soundMusic.play();
     }
-    _onClickCard(cards){
-        if(this._isClicked == true){
-            for(let index=0;index<cards.length; index++){
-                cards[index].elm.addEventListener("click", this.onClickCard.bind(this, this.cards[index]));
-            }
-        }
-    }
+
 
     shuffleCards(array) {
         let counter = array.length;
@@ -97,6 +95,7 @@ class Game extends Node {
         this.play.y = 50;
         this.play.elm.addEventListener("click", this._createCards.bind(this));
         this.addChild(this.play);
+
     }
 
     _createPlayAgain() {
@@ -108,6 +107,7 @@ class Game extends Node {
         this.playAgain.y = 200;
         this.playAgain.elm.addEventListener("click", this.resetGame.bind(this));
         this.addChild(this.playAgain);
+        this.soundMusic.play();
     }
 
     _createCongratulation() {
@@ -148,25 +148,30 @@ class Game extends Node {
             var y = row * 100 + 130;
             TweenMax.to(arrCards[index], 0.6, { ease: Back.easeOut.config(8), x: x, y: y, delay: (index + 1) * 0.1 })
         }
+        setTimeout(() => {
+            this.canClick = true;
+        }, 3000);
     }
 
     onClickCard(card) {
         if (!this.canClick) return;
 
         if (this.fistCard === card) return;
-
+        if (this.fistCard != null && this.secondCard != null) { this.canClick = false }
         if (this.fistCard === null) {
             this.fistCard = card;
             // open card
             this.fistCard.sprite.scaleX = 0;
+            this.soundShot.play();
             this.fistCard.flipOpenCard();
             console.log('first01', this.fistCard.value, this.fistCard.index);
-
         } else {
             this.canClick = false;
             this.secondCard = card;
             // open card
             this.secondCard.sprite.scaleX = 0;
+            this.soundShot.pause();
+            this.soundShot.play();
             this.secondCard.flipOpenCard();
             console.log('first02', this.secondCard.value, this.secondCard.index);
             setTimeout(() => { this.compareCard() }, 1000);
@@ -185,34 +190,42 @@ class Game extends Node {
     }
 
     compareCard() {
+        this.canClick = false;
         if (this.fistCard.value === this.secondCard.value) {
-
             // hide
+            this.canClick = false;
             this.fistCard.sprite.zIndex = 2;
             this.secondCard.sprite.zIndex = 2;
-            this.fistCard.zoomIn();
-            this.secondCard.zoomIn();
             this.point += 10;
             this.count++;
+            this.fistCard.zoomIn();
+            this.secondCard.zoomIn();
+            setTimeout(() => {
+                this.soundBreak.play();
+            }, 1000)
+
         } else {
             //close
+            this.canClick = true;
+            this.soundDeath.play();
             this.fistCard.flipCloseCard();
             this.secondCard.flipCloseCard();
             this.point -= 10;
         }
-        this.canClick = true;
+
         this.fistCard = null;
         this.checkWin(this.point);
         setTimeout(() => {
+            this.canClick = true;
             this.countPoint(this.point);
         }, 1000)
     }
 
     checkWin(point) {
         if (point == 0) {
-            setTimeout(()=>{
+            setTimeout(() => {
                 this._createGameOver();
-            },1000)
+            }, 1000)
             setTimeout(() => {
                 this.removeCard();
             }, 2500)
@@ -242,6 +255,7 @@ class Game extends Node {
         console.log(this.children);
     }
     resetGame() {
+        this.toTalPoint.value = 100 ;
         this.point = 100;
         this._createScore();
         this._createCards();
